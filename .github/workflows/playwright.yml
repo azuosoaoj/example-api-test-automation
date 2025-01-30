@@ -27,4 +27,4 @@ jobs:
 
       - name: Run Playwright tests
         run: |
-          npx playwright test api.test.js  # Run your Playwright test file
+          npm run test
