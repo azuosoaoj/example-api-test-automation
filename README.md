@@ -1,1 +1,1 @@
-# example-automation-api-testing
+# example-automation-api
