@@ -1,0 +1,30 @@
+name: Run Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Use Ubuntu runner for Playwright
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout the code in the repo
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Specify Node.js version
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Install Playwright dependencies
+        run: |
+          npx playwright install-deps  # Install Playwright dependencies for Ubuntu
+
+      - name: Run Playwright tests
+        run: |
+          npx playwright test api.test.js  # Run your Playwright test file
