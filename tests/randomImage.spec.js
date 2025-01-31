@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import allure from 'allure-playwright'; // Import Allure Playwright reporter
+import { allure } from "allure-playwright"
 
 test('Validate successful API response', async ({ request }) => {
   allure.feature('API Response Validation');
