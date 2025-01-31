@@ -2,9 +2,8 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 10_000,
   reporter: [
-    ['allure-playwright'],
+    ['allure-playwright', { outputFolder: 'allure-results' }]
   ],
   use: {
     baseURL: 'https://dog.ceo/api/'

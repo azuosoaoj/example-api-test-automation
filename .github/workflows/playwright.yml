@@ -2,18 +2,19 @@ name: Run Playwright Tests
 
 on:
   workflow_dispatch:
+
 jobs:
   test:
-    runs-on: ubuntu-latest  # Use Ubuntu runner for Playwright
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Checkout the code in the repo
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Specify Node.js version
+          node-version: '16'
 
       - name: Install dependencies
         run: |
@@ -38,14 +39,13 @@ jobs:
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
-          gh_pages: gh-pages
-          allure_history: allure-history
           allure_results: allure-results
 
-      - name: Publish test report
+      - name: Publish test report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: allure-history  # Ensure history is published in this folder
+          keep_files: true  # Keeps the history in the `gh-pages` branch
