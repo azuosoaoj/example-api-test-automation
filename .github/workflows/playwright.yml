@@ -11,6 +11,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Checkout GitHub Pages Branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -35,11 +41,19 @@ jobs:
         run: |
           npx playwright test --reporter=allure-playwright --output=allure-results
 
+      - name: Restore Allure history
+        run: |
+          mkdir -p allure-history
+          if [ -d gh-pages/allure-history ]; then
+            cp -r gh-pages/allure-history allure-results/history
+          fi
+
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
         with:
           allure_results: allure-results
+          allure_history: allure-history
 
       - name: Publish test report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -49,6 +63,6 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
 
-      - name: Acess the Report URL
+      - name: Access the Report URL
         run: |
-          echo "Report URL: https://azuosoaoj.github.io/example-automation-api/$GITHUB_RUN_NUMBER"
+          echo "Report URL: https://azuosoaoj.github.io/example-api-test-automation/$GITHUB_RUN_NUMBER"
